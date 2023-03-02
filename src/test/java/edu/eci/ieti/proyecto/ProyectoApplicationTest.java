@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@SpringBootTest
+@SpringBootTest (classes = ProyectoApplication.class)
 public class ProyectoApplicationTest {
 
     @Test
@@ -23,8 +23,6 @@ public class ProyectoApplicationTest {
 
     //Reservas
 
-    @Autowired
-    private ReservaService reservaService;
 
     //Service
 
@@ -147,5 +145,85 @@ public class ProyectoApplicationTest {
         assert usuarioService.getUsuario("10").getId().equals("10");
     }
 
-    
+    @Test
+    public void createUsuarioTestService() {
+        UsuarioService usuarioService = mock(UsuarioService.class);
+        Usuario usuario = new Usuario();
+        usuario.setId("10");
+        usuario.setNombre("Juan");
+        usuario.setApellido("Perez");
+        usuario.setEmail("juan@gmail.com");
+        usuario.setPassword("1234");
+        when(usuarioService.createUsuario(usuario)).thenReturn(usuario);
+        assert usuarioService.createUsuario(usuario).getId().equals("10");
+    }
+
+    @Test
+    public void updateUsuarioTestService() {
+        UsuarioService usuarioService = mock(UsuarioService.class);
+        Usuario usuario = new Usuario();
+        usuario.setId("10");
+        usuario.setNombre("Juan");
+        usuario.setApellido("Perez");
+        usuario.setEmail("juan@gmail.com");
+        usuario.setPassword("1234");
+        when(usuarioService.updateUsuario("10",usuario)).thenReturn(usuario);
+        assert usuarioService.updateUsuario("10",usuario).getId().equals("10");
+    }
+
+    @Test
+    public void deleteUsuarioTestService() {
+        UsuarioService usuarioService = mock(UsuarioService.class);
+        Usuario usuario = new Usuario();
+        usuario.setId("10");
+        usuario.setNombre("Juan");
+        usuario.setApellido("Perez");
+        usuario.setEmail("juan@gmail.com");
+        usuario.setPassword("1234");
+        doNothing().when(usuarioService).deleteUsuario("10");
+        usuarioService.deleteUsuario("10");
+        verify(usuarioService, times(1)).deleteUsuario("10");
+    }
+
+    //Controller
+
+    @Test
+    public void getUsuarioTestController(){
+        UsuarioController usuarioController = mock(UsuarioController.class);
+        Usuario usuario = new Usuario();
+        usuario.setId("10");
+        usuario.setNombre("Juan");
+        usuario.setApellido("Perez");
+        usuario.setEmail("juan@gmail.com");
+        usuario.setPassword("1234");
+        when(usuarioController.getUsuario("10")).thenReturn(new ResponseEntity(usuario, HttpStatus.ACCEPTED));
+        assert  usuarioController.getUsuario("10").getStatusCode().equals(HttpStatus.ACCEPTED);
+    }
+
+    @Test
+    public void createUsuarioTestController(){
+        UsuarioController usuarioController = mock(UsuarioController.class);
+        Usuario usuario = new Usuario();
+        usuario.setId("10");
+        usuario.setNombre("Juan");
+        usuario.setApellido("Perez");
+        usuario.setEmail("juan@gmail.com");
+        usuario.setPassword("1234");
+        when(usuarioController.addUsuario(usuario)).thenReturn(new ResponseEntity(usuario,HttpStatus.CREATED));
+        assert usuarioController.addUsuario(usuario).getStatusCode().equals(HttpStatus.CREATED);
+    }
+
+    @Test
+    public void deleteUsuarioTestController(){
+        UsuarioController usuarioController = mock(UsuarioController.class);
+        Usuario usuario = new Usuario();
+        usuario.setId("10");
+        usuario.setNombre("Juan");
+        usuario.setApellido("Perez");
+        usuario.setEmail("juan@gmail.com");
+        usuario.setPassword("1234");
+        when(usuarioController.deleteUsuario("10")).thenReturn(new ResponseEntity(usuario,HttpStatus.ACCEPTED));
+        usuarioController.deleteUsuario("10");
+        verify(usuarioController, times(1)).deleteUsuario("10");
+    }
 }
