@@ -13,6 +13,9 @@ public class Reserva {
     private String fechaFin;
     private String estado;
 
+    public Reserva() {
+    }
+
     public Reserva(String id, String idUsuario, String idEspacio, String fechaInicio, String fechaFin, String estado) {
         this.id = id;
         this.idUsuario = idUsuario;
