@@ -1,6 +1,6 @@
 ### Escuela Colombiana de Ingeniería
 
-### IETI - Sprint 2: Persistencia y Seguridad API REST
+### IETI - Sprint 3: Persistencia, Seguridad, pruebas Unitarias API REST
 
 #### Descripción
 
